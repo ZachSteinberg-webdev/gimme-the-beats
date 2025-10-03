@@ -8,9 +8,6 @@
 		"start": "npm run start --prefix backend",
 		"heroku-postbuild": "cd frontend && npm install && npm run build"
 	},
-	"engines": {
-    "node": ">=18 <23"
-  },
 	"author": "Zach Steinberg",
 	"license": "ISC"
 }
