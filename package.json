@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "node dev.js",
 		"start": "node backend/app.js",
+		"heroku-prebuild": "cd backend && npm install",
 		"heroku-postbuild": "cd frontend && npm install && npm run build"
 	},
 	"author": "Zach Steinberg",
