@@ -1,4 +1,6 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+	const dotenv = require('dotenv').config();
+};
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -96,16 +98,16 @@ const distDir = path.resolve(__dirname, '../../frontend/dist');
 
 // Serve static assets from the frontend build
 app.use(
-  express.static(distDir, {
-    maxAge: isProd ? '1y' : 0,
-    index: false // send index.html below
-  })
+	express.static(distDir, {
+		maxAge: isProd ? '1y' : 0,
+		index: false // send index.html below
+	})
 );
 
 // SPA fallback: for any non-API route, serve index.html
 app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api/')) return next();
-  res.sendFile(path.join(distDir, 'index.html'));
+	if (req.path.startsWith('/api/')) return next();
+	res.sendFile(path.join(distDir, 'index.html'));
 });
 
 // 404 fallback (only for unhandled API routes)
