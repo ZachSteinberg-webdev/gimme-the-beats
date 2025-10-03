@@ -1,0 +1,83 @@
+.wrap {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+/* Clean, button-proof knob surface */
+.knob {
+	all: unset;
+	display: inline-block;
+	cursor: ns-resize;
+	border-radius: 50%;
+	background: transparent;
+	position: relative; /* needed for center overlay */
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: none;
+}
+
+.knob svg {
+	display: block;
+}
+
+/* SVG parts */
+.rim {
+	fill: #0f0f0f;
+	stroke: #333;
+	stroke-width: 6px;
+}
+
+.face {
+	fill: #1a1a1a;
+}
+
+.cap {
+	fill: #111;
+}
+
+.arc {
+	/* stroke color only; width is set dynamically from React */
+	stroke: var(--tr-orange);
+	fill: none;
+	stroke-linecap: round;
+}
+
+.pointer {
+	fill: var(--tr-orange);
+}
+
+/* Labels and readouts */
+.label {
+	margin-top: 6px;
+	color: var(--tr-orange);
+	font-size: calc(var(--tr-label-sm) + 2px);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	line-height: 1;
+	text-align: center;
+}
+
+.readout {
+	margin-top: 6px;
+	text-align: center;
+	font-size: 12px;
+	opacity: 0.9;
+}
+
+/* Centered readout used only for Tempo/Swing */
+.centerLabel {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: 0.02em;
+	color: var(--tr-text, #eaeaea);
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}

@@ -1,0 +1,5 @@
+Making music should be fun, not complicated. Beat Machine gives you an easy way to turn ideas into beats without needing fancy gear or confusing software. Just open it up, tap in your rhythms, layer sounds, and experiment until you've built something that makes your head nod. Every beat you create can be saved and revisited, so those late-night bursts of inspiration don't disappear. Whether you're sketching out a groove for a song or just killing time with some loops, Beat Machine puts the tools in your hands to make it happen.
+
+I've always had rhythms bouncing around in my head, but no real way to capture them quickly. I wanted something simple that would let me play with beats and keep track of my ideas. So, I built this web application to do exactly that.
+
+This project was a fun challenge that pushed me further as a developer. I built it with React on the frontend and connected it to a Node/Express backend with a MongoDB database. It gave me solid experience handling user input, managing state across different components, and making everything work smoothly together from the browser to the database.

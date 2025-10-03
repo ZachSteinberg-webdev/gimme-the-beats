@@ -1,0 +1,513 @@
+/* Sequencer grid panel */
+.grid {
+	--cell: 44px;
+	--knob: 40px;
+	--knob-gap: 8px;
+	padding: 12px;
+	display: grid;
+	gap: 16px;
+	background: var(--tr-panel);
+	border: 1px solid var(--tr-border);
+	border-radius: 10px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+	position: relative;
+}
+
+.row {
+	position: relative;
+	will-change: transform;
+	background-color: #1a1a1a;
+}
+
+.rowInner {
+	display: grid;
+	/* Keep right column tight to its content to avoid growing gap on wide screens */
+	grid-template-columns: minmax(0, var(--controls, 400px)) minmax(0, max-content);
+	column-gap: 12px;
+	align-items: start;
+}
+
+/* Left column: 2-line header */
+.header {
+	display: grid;
+	grid-template-rows: auto auto; /* sample selector, knobs+actions */
+	row-gap: 10px; /* match right column row-gap for alignment */
+	gap: 8px;
+	min-width: 0; /* allow shrink within column */
+	overflow: visible; /* avoid clipping the rightmost action button border */
+}
+
+/* Header first row: sample selector + actions on one line */
+.topRow {
+	display: grid;
+	/* dropdown flexes, actions keep natural width */
+	grid-template-columns: minmax(var(--dropdown-min, 220px), 1fr) max-content;
+	column-gap: 10px;
+	align-items: center;
+	min-width: 0; /* allow children to shrink */
+}
+.topRow .sampleDropdown {
+	min-width: 0; /* allow ellipsis to work */
+	width: auto; /* let grid sizing handle width */
+}
+
+/* Right column wrapper: stack pads above velocity */
+.right {
+	display: grid;
+	grid-template-rows: auto auto;
+	row-gap: 10px;
+	min-width: 0;
+	justify-self: start;
+}
+
+.scrollWrap {
+	overflow: visible;
+	width: 100%;
+	max-width: 100%;
+}
+.scrollInner {
+	display: grid;
+	row-gap: 10px;
+}
+
+/* Full-width faux dropdown with native select overlay */
+.sampleDropdown {
+	position: relative;
+	display: flex; /* center label vertically */
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	background: var(--tr-cream);
+	color: #111;
+	border: 1px solid #c4b89f;
+	border-radius: 6px;
+	padding: 8px 34px 8px 12px; /* leave room for caret */
+	box-shadow:
+		0 1px 0 rgba(0, 0, 0, 0.35),
+		inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	overflow: hidden;
+	height: var(--cell); /* match step button height */
+	align-items: center;
+}
+.sampleText {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: var(--tr-sample-font-size);
+	font-weight: 700; /* bold label in the pill */
+	line-height: 1.15;
+}
+.caret {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 0;
+	height: 0;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 7px solid #111;
+	pointer-events: none;
+}
+.nativeSelect {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+.nativeSelect:focus-visible {
+	outline: 2px solid var(--tr-focus, #ffd24d);
+	outline-offset: 2px;
+}
+.nativeSelect,
+.nativeSelect option,
+.nativeSelect optgroup {
+	font-size: var(--tr-sample-font-size);
+	font-weight: 700;
+	font-family: inherit;
+}
+
+/* Header second row: per-track knobs */
+.knobRow {
+	display: flex;
+	align-items: flex-start; /* top-align with velocity row */
+	justify-content: space-between; /* evenly distribute knobs across the row */
+	padding-top: 2px; /* aligns with right-side velocity row */
+}
+.knobWrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-self: start;
+	width: var(--knob);
+	flex: 0 0 var(--knob);
+}
+
+/* Compact action buttons */
+.actionGroup {
+	display: inline-flex;
+	border: 1px solid #333;
+	border-radius: 6px; /* outer group curves */
+	overflow: hidden;
+	height: var(--cell); /* match step button height */
+	justify-self: end; /* align to the right edge of the header */
+	width: max-content; /* shrink-wrap to buttons */
+	align-self: start; /* top-align with knobs */
+}
+.actionBtn {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 40px;
+	height: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #0f0f0f;
+	color: var(--tr-text);
+	border: none;
+	border-right: 1px solid #333;
+	font-weight: 700;
+	cursor: pointer;
+	margin: 0;
+	border-radius: 0 !important; /* override global button radius */
+}
+.actionBtn:first-child {
+	border-top-left-radius: 6px !important;
+	border-bottom-left-radius: 6px !important;
+}
+.actionBtn:last-child {
+	border-right: none;
+	border-top-right-radius: 6px !important;
+	border-bottom-right-radius: 6px !important;
+}
+.actionBtn:hover {
+	filter: brightness(1.08);
+	outline: none !important;
+	background: #f26c2a69;
+}
+.actionBtn:active {
+	transform: translateY(1px);
+}
+.actionBtn:focus-visible {
+	outline: 2px solid var(--tr-focus, #ffd24d);
+	outline-offset: -2px;
+	border-radius: 4px;
+}
+.actionBtn[aria-pressed='true'] {
+	background: var(--tr-orange);
+	color: #111;
+	border-right-color: #8f3e14;
+}
+.actionBtn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.controlsRow > button {
+	width: 100%;
+}
+
+.velocityLabel {
+	justify-self: end;
+	align-self: center;
+	font-size: var(--tr-label-sm);
+	line-height: var(--tr-label-line);
+	letter-spacing: var(--tr-label-tracking);
+	white-space: nowrap;
+	color: var(--tr-muted);
+	padding: 0 4px;
+}
+
+/* Pads */
+.stepGrid {
+	display: grid;
+	grid-template-columns: repeat(var(--cols), var(--cell));
+	gap: 10px 10px;
+	user-select: none;
+	align-items: start;
+}
+.pad {
+	box-sizing: border-box;
+	width: var(--cell) !important;
+	height: var(--cell) !important;
+	border-radius: 8px;
+	border: 2px solid #444;
+	outline: none;
+	position: relative;
+	appearance: none;
+	-webkit-appearance: none;
+	background: none !important;
+	background-color: var(--pad-dim, #0f0f0f) !important;
+	box-shadow:
+		inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+		inset 0 1px 0 rgba(0, 0, 0, 0.5);
+	transition:
+		filter 80ms ease,
+		outline 80ms ease,
+		transform 40ms ease;
+}
+.padAccent {
+	border-color: #885a3a;
+}
+.pad::after {
+	content: '';
+	position: absolute;
+	top: 9px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #252525;
+	box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+}
+.padOn {
+	background: none !important;
+	background-color: var(--pad-on) !important;
+}
+.padOn::after {
+	background: #ffe9b6;
+	box-shadow:
+		0 0 7px rgba(255, 200, 120, 0.65),
+		inset 0 0 2px rgba(0, 0, 0, 0.35);
+}
+.padPlay {
+	outline: 2px solid var(--tr-play-outline);
+}
+.padOffPlay {
+	filter: brightness(1.05);
+}
+.pad:hover {
+	filter: brightness(1.08);
+}
+.pad:active {
+	transform: translateY(1px);
+}
+
+/* Velocity row */
+.velGrid {
+	display: grid;
+	grid-template-columns: repeat(var(--cols), var(--cell));
+	gap: 10px 10px;
+	align-items: start;
+}
+.velKnob {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 44px;
+}
+.velocityLabel {
+	align-self: center;
+	justify-self: end;
+	line-height: 1;
+	transform: translateY(1px);
+}
+
+@media (max-width: 1350px) {
+	.grid {
+		--cell: 36px;
+		--knob: 36px;
+		gap: 12px;
+	}
+
+	.row {
+		grid-template-columns: 1fr;
+		row-gap: 12px;
+	}
+
+	.header {
+		row-gap: 8px;
+	}
+
+	.topRow {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		column-gap: 10px;
+		align-items: stretch;
+	}
+
+	.knobRow {
+		flex-wrap: nowrap;
+		gap: 8px;
+		justify-content: space-between;
+	}
+	.knobWrap {
+		flex: 1 1 calc(var(--knob) + 4px);
+		max-width: 48px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.actionGroup {
+		justify-self: end;
+		width: auto;
+		align-self: stretch;
+	}
+
+	.right {
+		justify-self: stretch;
+	}
+
+	.scrollWrap {
+		overflow-x: auto;
+		padding: 4px;
+		width: 100%;
+		max-width: 100%;
+	}
+	.scrollInner {
+		display: grid;
+		row-gap: 10px;
+	}
+
+	.velKnob {
+		height: 36px;
+	}
+}
+
+@media (max-width: 900px) {
+	.scrollWrap {
+		margin-inline: -4px;
+		padding-inline: 4px;
+	}
+}
+
+/* Reorder mode visuals */
+
+.rowHover {
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35) inset;
+}
+/* While reordering, disable pad/vel interactions to prevent accidental edits */
+.rowReorder .pads button,
+.rowReorder .velGrid .velKnob {
+	pointer-events: none;
+}
+
+/* Reorder mode visuals (iPhone-like jiggle) */
+
+/* Slight desync like iOS icons */
+.row.rowReorder:nth-child(odd) {
+	animation-duration: 0.24s;
+	animation-delay: 0.02s;
+}
+.row.rowReorder:nth-child(3n) {
+	animation-duration: 0.2s;
+	animation-delay: 0.01s;
+}
+.row.rowReorder:nth-child(4n) {
+	animation-duration: 0.26s;
+}
+
+.rowDragging {
+	cursor: grabbing;
+}
+
+/* Make all interactive children inert while reordering */
+.rowReorder * {
+	pointer-events: none;
+}
+.rowReorder .pads button,
+.rowReorder .velGrid .velKnob {
+	pointer-events: none;
+} /* explicit for clarity */
+
+/* Subtle iOS-like jiggle */
+@keyframes iosJiggle {
+	0% {
+		transform: translateX(-0.6px) rotate(-0.25deg);
+	}
+	50% {
+		transform: translateX(0.6px) rotate(0.25deg);
+	}
+	100% {
+		transform: translateX(-0.6px) rotate(-0.25deg);
+	}
+}
+.rowReorder {
+	filter: grayscale(0.15) brightness(0.96);
+	box-shadow:
+		inset 0 0 0 2px #fff,
+		/* white outline */ inset 0 0 0 8px var(--tr-panel); /* 4px inner buffer with row background color */
+	border-radius: 10px;
+	padding: 6px; /* tiny gap between outline and controls */
+	animation: iosJiggle 0.28s ease-in-out infinite;
+	transform-origin: 50% 50%;
+	cursor: grab;
+	user-select: none;
+	margin: -6px;
+}
+/* gentle desync */
+.row.rowReorder:nth-child(odd) {
+	animation-duration: 0.3s;
+}
+.row.rowReorder:nth-child(3n) {
+	animation-duration: 0.26s;
+}
+.row.rowReorder:nth-child(4n) {
+	animation-duration: 0.32s;
+}
+
+.rowDragging {
+	cursor: grabbing;
+}
+
+/* Make all interactive children inert while reordering */
+.rowReorder * {
+	pointer-events: none !important;
+}
+.rowReorder .pads button,
+.rowReorder .velGrid .velKnob {
+	pointer-events: none !important;
+}
+
+/* =========================================================
+   ACCESSIBILITY: clearer keyboard focus for pads (steps)
+   ========================================================= */
+
+/* 1) Roving-tabindex “current cell” hint:
+   The cell with tabIndex=0 is the one that will receive focus next.
+   This gives a subtle hint even before it is actually focused. */
+.pad[tabindex='0'] {
+	/* subtle inner ring (doesn’t fight with padPlay/On styles) */
+	box-shadow: inset 0 0 0 2px var(--tr-focus, #4dbeff);
+}
+
+/* 2) Actual keyboard focus ring:
+   Use :focus-visible so mouse users don’t get a ring on click */
+.pad:focus-visible {
+	outline: 2px solid var(--tr-focus, #ffd24d);
+	outline-offset: -2px;
+}
+
+/* 3) Keep the ring readable on “on” pads and during playhead */
+.padOn:focus-visible,
+.padPlay:focus-visible {
+	outline-color: var(--tr-focus, #ffd24d);
+}
+
+/* 4) When an entire row is in reorder mode, you already gate interactions;
+   still allow a visible focus ring if the user navigates via keyboard. */
+.rowReorder .pad:focus-visible {
+	outline: 2px solid var(--tr-focus, #ffd24d);
+	outline-offset: -2px;
+}
+
+/* 5) Optional: show which row currently contains the keyboard focus */
+.rowInner:focus-within {
+	box-shadow: inset 0 0 0 1px rgba(255, 210, 77, 0.35);
+	border-radius: 8px;
+}
+
+/* 6) Respect users who prefer less motion/high contrast */
+@media (prefers-reduced-motion: reduce) {
+	.pad[tabindex='0'] {
+		box-shadow: inset 0 0 0 2px var(--tr-focus, #ffd24d);
+	}
+}
+@media (prefers-contrast: more) {
+	.pad:focus-visible {
+		outline-width: 3px;
+	}
+}

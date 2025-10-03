@@ -1,0 +1,224 @@
+/* TR-808 theme tokens (approximate) */
+:root {
+	--tr-bg: #101010;
+	--tr-panel: #1a1a1a;
+	--tr-bezel: #0b0b0b;
+
+	/* Layout tuning variables for sequencer */
+	--controls: 350px; /* left controls column width */
+	--dropdown-min: 150px; /* minimum width for the sample dropdown */
+
+	/* Unified content max width for top notices + studio (responsive cap) */
+	--content-max: min(1400px, calc(100vw - 48px));
+
+	/* Transport stacked button width (left/right stacks) */
+	--stack-btn-width: 130px;
+
+	--tr-text: #d8d0c6; /* warm off-white */
+	--tr-muted: #9b9b9b;
+
+	--tr-sample-font-size: 17px; /* tweak to taste (16–18px tends to look right) */
+
+	/* label tokens */
+	--tr-label-sm: 9px;
+	--tr-label-line: 1; /* tight line-height for tiny labels */
+	--tr-label-tracking: 0.02em;
+
+	--tr-orange: #f26c2a; /* Roland orange line + logo */
+	--tr-yellow: #f6d14b; /* step 9-12 */
+	--tr-red: #e04a3f; /* step 1-4 */
+	--tr-white: #f3efe7; /* step 13-16 */
+	--tr-orange2: #ff8a33; /* step 5-8 (warmer orange) */
+	--tr-cream: #f2e4c7; /* instrument label caps */
+	--tr-border: #2a2a2a;
+
+	/* NEW: dim variants so pads show group color even when OFF */
+	--tr-red-dim: #5a2220;
+	--tr-orange2-dim: #5a3a20;
+	--tr-yellow-dim: #51451a;
+	--tr-white-dim: #aca08d;
+
+	--tr-pad-off: #0f0f0f;
+	--tr-pad-on-glow: rgba(255, 255, 255, 0.14);
+	--tr-play-outline: #ffb26a;
+}
+
+/* App background + default text */
+html,
+body,
+#root {
+	background: linear-gradient(180deg, var(--tr-bezel), var(--tr-bg));
+	color: var(--tr-text);
+}
+
+/* A simple panel wrapper if you want to wrap your Studio section:
+	 <section className="tr808-panel"> ... </section>	 (optional)
+*/
+.tr808-panel {
+	background: var(--tr-panel);
+	border: 1px solid var(--tr-border);
+	border-radius: 10px;
+	box-shadow:
+		0 8px 28px rgba(0, 0, 0, 0.45),
+		inset 0 1px 0 rgba(255, 255, 255, 0.04);
+	padding: 16px 16px;
+	position: relative;
+	max-width: var(--content-max);
+	width: fit-content; /* shrink to content width */
+	margin: 0 auto 12px auto;
+	/* margin-left: auto; */
+	/* margin-right: auto; */
+}
+
+/* Orange accent line like the 808 front fascia */
+.tr808-panel::before {
+	content: '';
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	top: 44px;
+	height: 2px;
+	background: var(--tr-orange);
+	opacity: 0.95;
+}
+
+/* Generic button vibe (used by TransportBar buttons if you want) */
+.tr808-panel button {
+	background: #2a2a2a;
+	color: var(--tr-text);
+	border: 1px solid #3a2a2a;
+	border-radius: 6px;
+	padding: 6px 10px;
+	cursor: pointer;
+}
+.tr808-panel button:hover {
+	filter: brightness(1.1);
+}
+.tr808-panel button:active {
+	transform: translateY(1px);
+}
+
+/* Global hover outline for buttons (exclude step pads) */
+button:not(.pad):hover {
+	outline: 2px solid var(--tr-orange);
+	outline-offset: 2px;
+}
+
+/* Studio title bar */
+.studioTitleBar {
+	margin: 0;
+	padding: 0 12px;
+	display: flex;
+	align-items: center;
+}
+
+.studioTitleBarInner {
+	flex: 1;
+	text-align: center;
+}
+.studioTitleWrap {
+	position: relative;
+	display: inline-block;
+}
+.studioTitle {
+	font-weight: 700;
+	font-size: 18px;
+	cursor: text;
+}
+.studioTitleInput {
+	background: transparent;
+	color: var(--tr-text);
+	border: 1px solid transparent; /* reserve space to avoid shift */
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-size: 18px;
+	font-weight: 700;
+	min-width: 180px;
+	text-align: center;
+}
+.studioTitleInput:focus,
+.studioTitleInput:focus-visible {
+	outline: none;
+	box-shadow: none;
+	border-color: #333; /* subtle focus without ring */
+}
+.studioBadge {
+	background: var(--tr-orange);
+	color: #111;
+	border-radius: 6px;
+	padding: 2px 6px;
+	font-size: 12px;
+	font-weight: 700;
+	position: absolute;
+	left: 95%;
+	margin-left: 8px;
+	top: 25%;
+	transform: translateY(-50%);
+	opacity: 1;
+	transition: opacity 160ms ease 80ms; /* fade-in with slight delay */
+}
+.studioBadgeMuted {
+	background: #2a2a2a;
+	color: #bbb;
+	border-radius: 6px;
+	padding: 2px 6px;
+	font-size: 12px;
+	position: absolute;
+	left: 95%;
+	margin-left: 8px;
+	top: 25%;
+	transform: translateY(-50%);
+	opacity: 1;
+	transition: opacity 160ms ease 80ms; /* fade-in with slight delay */
+}
+.studioBadgeHidden {
+	opacity: 0;
+	transition: none;
+	pointer-events: none;
+}
+
+@media (max-width: 1350px) {
+	:root {
+		--content-max: calc(100vw - 32px);
+	}
+
+	.tr808-panel {
+		width: min(calc(100vw - 32px), max-content);
+		/* margin: 0; */
+		padding: 16px 12px 20px;
+	}
+
+	.tr808-panel::before {
+		left: 12px;
+		right: 12px;
+	}
+}
+
+/* Reorder toggle button in title bar — styled like transport buttons */
+
+/* Reorder toggle button in title bar — styled same as transport buttons */
+.reorderBtn {
+	appearance: none;
+	-webkit-appearance: none;
+	background: #2a2a2a;
+	color: var(--tr-text);
+	border: 1px solid #3a2a2a;
+	border-radius: 6px;
+	padding: 6px 10px;
+	cursor: pointer;
+	font: inherit;
+	line-height: 1;
+	display: inline-block;
+}
+
+.reorderBtn:hover {
+	filter: brightness(1.06);
+	outline: 2px solid var(--tr-orange);
+	outline-offset: 2px;
+}
+
+.reorderActive {
+	background: var(--tr-cream);
+	color: #111;
+	border-color: #c4b89f;
+}

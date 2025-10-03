@@ -1,0 +1,65 @@
+/* App root container */
+.appRoot {
+	min-height: 100vh;
+	width: 100%;
+	/* max-width: calc(100vw - 48px); */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between; /* vertical */
+	align-items: center; /* horizontal */
+	padding: 0;
+	font-family: system-ui, sans-serif;
+}
+
+.appContent {
+	display: inline-block; /* shrink to the wider of GuestNudge or Studio (Studio dominates) */
+	max-width: var(--content-max);
+	width: auto;
+	margin: 2rem 1rem;
+}
+
+/* Optional: let the content size itself without #root constraints */
+#root {
+	max-width: none;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	text-align: initial;
+}
+
+.logo {
+	height: 6em;
+	padding: 1.5em;
+	will-change: filter;
+	transition: filter 300ms;
+}
+.logo:hover {
+	filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+	filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	a:nth-of-type(2) .logo {
+		animation: logo-spin infinite 20s linear;
+	}
+}
+
+.card {
+	padding: 2em;
+}
+
+.read-the-docs {
+	color: #888;
+}
