@@ -30,7 +30,17 @@ app.disable('x-powered-by');
 // Helmet with a relaxed CSP (frontend runs separately)
 app.use(
 	helmet({
-		contentSecurityPolicy: false, // keep false for API-only server / local dev
+		contentSecurityPolicy: {
+			directives: {
+				defaultSrc: ["'self'"],
+				scriptSrc: ["'self'"],
+				styleSrc: ["'self'", "'unsafe-inline'"],
+				imgSrc: ["'self'", 'data:'],
+				connectSrc: ["'self'"],
+				baseUri: ["'self'"],
+				formAction: ["'self'"]
+			}
+		},
 		crossOriginResourcePolicy: { policy: 'cross-origin' }
 	})
 );
