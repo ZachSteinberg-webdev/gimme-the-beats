@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "node dev.js",
-		"start": "node backend/app.js",
+		"start": "node backend/index.js",
 		"heroku-prebuild": "cd backend && npm install",
 		"heroku-postbuild": "cd frontend && npm install && npm run build"
 	},
