@@ -29,15 +29,18 @@
 	padding: 10px 12px;
 	border-bottom: 1px solid var(--tr-border);
 }
+
 .title {
 	font-weight: 700;
 	font-size: 16px;
 	text-align: center;
 	justify-self: center;
 }
+
 .spacer {
 	height: 1px;
 }
+
 .closeBtn,
 .smallBtn {
 	background: transparent;
@@ -47,12 +50,14 @@
 	padding: 6px 10px;
 	cursor: pointer;
 }
+
 .closeBtn:hover,
 .smallBtn:hover {
 	border-color: #333;
 	outline: 2px solid var(--tr-orange);
 	outline-offset: 2px;
 }
+
 .closeBtn:focus,
 .closeBtn:focus-visible,
 .smallBtn:focus,
@@ -60,9 +65,11 @@
 	outline: 2px solid var(--tr-orange);
 	outline-offset: 2px;
 }
+
 .content {
 	padding: 10px 12px 12px;
 }
+
 .list {
 	list-style: none;
 	margin: 0;
@@ -70,6 +77,7 @@
 	display: grid;
 	gap: 8px;
 }
+
 .item {
 	display: grid;
 	grid-template-columns: 1fr auto;
@@ -85,42 +93,50 @@
 		border-color 120ms ease,
 		transform 80ms ease;
 }
+
 .item:hover {
 	background: #151515;
 	border-color: #3a3a3a;
 	outline: 2px solid var(--tr-orange);
 	outline-offset: 2px;
 }
+
 .item:active {
 	transform: translateY(1px);
 }
+
 .item:focus {
 	outline: 2px solid var(--tr-orange);
 	outline-offset: 2px;
 }
+
 .itemTitle {
 	font-weight: 600;
 }
+
 .itemMeta {
 	opacity: 0.85;
 	font-size: 12px;
 }
+
 .loadBtn {
 	composes: smallBtn;
 }
-
 @keyframes slideRubber {
 	0% {
 		transform: translateY(-30%) scaleY(0.96);
 		opacity: 0;
 	}
+
 	60% {
 		transform: translateY(4%) scaleY(1.02);
 		opacity: 1;
 	}
+
 	80% {
 		transform: translateY(-2%) scaleY(0.997);
 	}
+
 	100% {
 		transform: translateY(0) scaleY(1);
 	}

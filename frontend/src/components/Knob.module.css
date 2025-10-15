@@ -4,7 +4,6 @@
 	align-items: center;
 	justify-content: flex-start;
 }
-
 /* Clean, button-proof knob surface */
 .knob {
 	all: unset;
@@ -21,7 +20,6 @@
 .knob svg {
 	display: block;
 }
-
 /* SVG parts */
 .rim {
 	fill: #0f0f0f;
@@ -47,7 +45,6 @@
 .pointer {
 	fill: var(--tr-orange);
 }
-
 /* Labels and readouts */
 .label {
 	margin-top: 6px;
@@ -65,7 +62,6 @@
 	font-size: 12px;
 	opacity: 0.9;
 }
-
 /* Centered readout used only for Tempo/Swing */
 .centerLabel {
 	position: absolute;

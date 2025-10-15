@@ -41,14 +41,15 @@
 	cursor: pointer;
 	text-decoration: underline;
 }
+
 .text .linkBtn:hover {
 	outline: none;
 }
+
 .linkBtn:focus-visible {
 	outline: 2px solid var(--tr-orange);
 	outline-offset: 2px;
 }
-
 @media (max-width: 1350px) {
 	.wrap {
 		margin: 12px 0;

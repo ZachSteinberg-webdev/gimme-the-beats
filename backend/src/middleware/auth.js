@@ -12,15 +12,16 @@ function envBool(name, def) {
 	return def;
 }
 
+function resolveSameSite() {
+	const v = (process.env.COOKIE_SAMESITE || 'lax').toString().trim().toLowerCase();
+	if (v === 'none' || v === 'strict' || v === 'lax') return v;
+	return 'lax';
+}
+
 function isRequestSecure(req) {
 	try {
 		if (String(process.env.COOKIE_SECURE).toLowerCase() === 'true') return true;
 	} catch {}
-	function resolveSameSite() {
-		const v = (process.env.COOKIE_SAMESITE || 'lax').toString().trim().toLowerCase();
-		if (v === 'none' || v === 'strict' || v === 'lax') return v;
-		return 'lax';
-	}
 
 	if (req && (req.secure || req.headers['x-forwarded-proto'] === 'https')) return true;
 	return process.env.NODE_ENV === 'production';

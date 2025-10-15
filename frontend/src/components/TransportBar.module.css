@@ -11,16 +11,15 @@
 	align-items: start;
 	position: relative;
 }
-
 /* keep underline commented out */
 /* .bar::before { ... } */
-
 .left {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 	align-items: stretch;
 }
+
 .leftRow {
 	display: flex;
 	gap: 10px;
@@ -33,6 +32,7 @@
 	gap: 8px;
 	align-items: stretch;
 }
+
 .leftStack .key,
 .leftStack .tap,
 .leftStack .addTrack {
@@ -62,10 +62,12 @@
 	cursor: pointer;
 	font-weight: 700;
 }
+
 .projBtn:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
+
 .projBtnPrimary {
 	background: var(--tr-cream);
 	color: #111;
@@ -89,6 +91,7 @@
 	text-transform: uppercase;
 	margin-bottom: 4px;
 }
+
 .legendCenter {
 	text-align: center;
 }
@@ -101,7 +104,6 @@
 	justify-content: center;
 	align-items: center;
 }
-
 /* Steps group: label under segmented buttons and centered */
 .groupSteps {
 	display: flex;
@@ -110,14 +112,12 @@
 	/* gap: 6px; */
 	padding-top: 8px;
 }
-
 /* row for inputs + readouts */
 .fieldRow {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
-
 /* BPM number input */
 .num {
 	width: 90px;
@@ -128,13 +128,13 @@
 	border-radius: 8px;
 	font-size: 16px;
 }
-
 /* Swing range */
 .range {
 	flex: 1;
 	height: 6px;
 	accent-color: var(--tr-orange);
 }
+
 .readoutSmall {
 	min-width: 36px;
 	text-align: right;
@@ -142,7 +142,6 @@
 	font-size: 14px;
 	opacity: 0.9;
 }
-
 /* Steps segmented control (unchanged from your good state) */
 .segmented {
 	display: inline-flex;
@@ -150,6 +149,7 @@
 	border-radius: 8px;
 	/* overflow: hidden; */
 }
+
 .segmented .segBtn {
 	appearance: none;
 	-webkit-appearance: none;
@@ -163,30 +163,34 @@
 	cursor: pointer;
 	border-radius: 0 !important;
 }
+
 .segBtn:hover {
 	filter: brightness(1.08) !important;
 	outline: none !important;
 	background-color: #f26c2a69;
 }
+
 .segBtn:active {
 	transform: translateY(1px);
 }
+
 .segBtn[aria-pressed='true'],
 .segBtnActive {
 	background: var(--tr-orange);
 	color: #111;
 	border-right-color: #8f3e14;
 }
+
 .segmented .segBtnFirst {
 	border-top-left-radius: 8px !important;
 	border-bottom-left-radius: 8px !important;
 }
+
 .segmented .segBtnLast {
 	border-top-right-radius: 8px !important;
 	border-bottom-right-radius: 8px !important;
 	border-right: none;
 }
-
 /* Buttons */
 .key,
 .tap,
@@ -198,24 +202,27 @@
 	font-weight: 700;
 	cursor: pointer;
 }
+
 .key {
 	padding: 8px 14px;
 }
+
 .tap,
 .addTrack {
 	padding: 6px 10px;
 	border-radius: 4px;
 }
+
 .key:active,
 .tap:active,
 .addTrack:active {
 	transform: translateY(1px);
 }
+
 .addTrack:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
-
 @media (max-width: 1350px) {
 	.bar {
 		grid-template-columns: 1fr;
@@ -233,6 +240,7 @@
 		gap: 8px;
 		width: 100%;
 	}
+
 	.leftStack .key,
 	.leftStack .tap,
 	.leftStack .addTrack {
@@ -247,26 +255,32 @@
 		gap: 0px;
 		width: 100%;
 	}
+
 	.center > .group {
 		min-width: 0;
 		justify-self: center;
 	}
+
 	.center > .group:not(.groupSteps) {
 		flex: 0 0 auto;
 		align-items: center;
 	}
+
 	.center > .groupSteps {
 		flex: 0 0 auto;
 		justify-self: center;
 		padding-top: 28px;
 	}
+
 	.groupSteps {
 		padding-top: 0;
 		align-items: center;
 	}
+
 	.segmented {
 		width: auto;
 	}
+
 	.segmented .segBtn {
 		width: 100%;
 	}
@@ -277,11 +291,11 @@
 		flex-wrap: wrap;
 		gap: 8px;
 	}
+
 	.right button {
 		flex: 1 1 160px;
 	}
 }
-
 @media (max-width: 580px) {
 	.center {
 		grid-template-columns: repeat(3, minmax(0, auto));
@@ -323,21 +337,23 @@
 	.segmented .segBtn[data-step='8'] {
 		border-top-left-radius: 8px !important;
 	}
+
 	.segmented .segBtn[data-step='16'] {
 		border-top-right-radius: 8px !important;
 		border-left: 0;
 	}
+
 	.segmented .segBtn[data-step='32'] {
 		border-bottom-left-radius: 8px !important;
 		border-top: 0;
 	}
+
 	.segmented .segBtn[data-step='64'] {
 		border-bottom-right-radius: 8px !important;
 		border-left: 0;
 		border-top: 0;
 	}
 }
-
 @media (max-width: 490px) {
 	.bar {
 		grid-template-columns: 1fr;
@@ -349,10 +365,12 @@
 		align-items: stretch;
 		gap: 8px;
 	}
+
 	.leftStack {
 		flex-direction: column;
 		width: 100%;
 	}
+
 	.leftStack .key,
 	.leftStack .tap,
 	.leftStack .addTrack {
@@ -367,11 +385,13 @@
 		gap: 12px;
 		justify-items: center;
 	}
+
 	.center > .group {
 		min-width: 0 !important;
 		transform: scale(0.8);
 		transform-origin: top center;
 	}
+
 	.center > .groupSteps {
 		padding-top: 18px;
 	}
@@ -385,6 +405,7 @@
 		align-items: stretch;
 		gap: 8px;
 	}
+
 	.right button {
 		flex: 1 1 auto;
 		width: 100%;

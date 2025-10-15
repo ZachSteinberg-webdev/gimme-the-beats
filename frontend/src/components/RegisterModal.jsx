@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import styles from './AuthModal.module.css';
 import { useAuth } from '../state/AuthContext.jsx';
 
@@ -9,6 +9,7 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
 	const [displayName, setDisplayName] = useState('');
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState('');
+	const firstFieldRef = useRef(null);
 
 	useEffect(() => {
 		if (!open) return;
@@ -18,6 +19,13 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
 	}, [open, onClose]);
+
+	useEffect(() => {
+		if (!open) return;
+		if (firstFieldRef.current) {
+			firstFieldRef.current.focus({ preventScroll: true });
+		}
+	}, [open]);
 
 	const onOverlay = useCallback(
 		(e) => {
@@ -79,6 +87,7 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
 								id='reg-name'
 								type='text'
 								autoComplete='nickname'
+								ref={firstFieldRef}
 								value={displayName}
 								onChange={(e) => setDisplayName(e.target.value)}
 								placeholder='E.g. The Beat Master'

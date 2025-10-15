@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import styles from './AuthModal.module.css';
 import { useAuth } from '../state/AuthContext.jsx';
 
@@ -8,6 +8,7 @@ export default function LoginModal({ open, onClose, onSwitchToRegister }) {
 	const [password, setPassword] = useState('');
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState('');
+	const firstFieldRef = useRef(null);
 
 	useEffect(() => {
 		if (!open) return;
@@ -17,6 +18,13 @@ export default function LoginModal({ open, onClose, onSwitchToRegister }) {
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
 	}, [open, onClose]);
+
+	useEffect(() => {
+		if (!open) return;
+		if (firstFieldRef.current) {
+			firstFieldRef.current.focus({ preventScroll: true });
+		}
+	}, [open]);
 
 	const onOverlay = useCallback(
 		(e) => {
@@ -79,6 +87,7 @@ export default function LoginModal({ open, onClose, onSwitchToRegister }) {
 								type='email'
 								autoComplete='email'
 								required
+								ref={firstFieldRef}
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
