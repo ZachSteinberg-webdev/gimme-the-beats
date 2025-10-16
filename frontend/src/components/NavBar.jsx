@@ -50,7 +50,7 @@ export default function NavBar({ onOpenLogin, onOpenRegister, onOpenDashboard, o
 							window.history.pushState({}, '', '/');
 						}}
 					>
-						Beat Machine
+						Gimme The Beats
 					</a>
 				</div>
 				<div className={styles.spacer} />
