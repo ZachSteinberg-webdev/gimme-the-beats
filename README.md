@@ -82,13 +82,13 @@ Under the hood, I schedule audio with a lookahead clock so it stays in sync inst
 - **Express server**
   - Serves `/api/*` routes for auth, pattern CRUD, user profile data.
   - Serves the Vite production build (the compiled React app) for all non-API GET routes.
-  - Uses common middleware:
-      `app.use(helmet());`
-      `app.use(express.json({ limit: '10kb' }));`
-      `app.use(express.urlencoded({ extended: true }));`
-      `app.use(mongoSanitize());`
-      `app.use(cookieParser(process.env.COOKIE_SECRET));`
-      `app.use(cors({ origin: FRONTEND_URL, credentials: true }))   // loosened in dev only`
+  - Uses common middleware: 
+    	- `app.use(helmet());`
+    	- `app.use(express.json({ limit: '10kb' }));`
+    	- `app.use(express.urlencoded({ extended: true }));`
+    	- `app.use(mongoSanitize());`
+    	- `app.use(cookieParser(process.env.COOKIE_SECRET));`
+    	- `app.use(cors({ origin: FRONTEND_URL, credentials: true }))   // loosened in dev only`
 
 - **Controllers**
   - Auth controller: register / login / logout / getCurrentUser
@@ -210,7 +210,8 @@ This is the same idea I use in my other apps: “try it now, keep your work late
 ### Pattern Save / Load
 
 - “Save Pattern” calls something like:
-		```
+
+    ```
     POST /api/patterns/save
     {
         patternName,
@@ -228,7 +229,7 @@ This is the same idea I use in my other apps: “try it now, keep your work late
             ...
         ]
     }
-		```
+    ```
 
 - On the server:
   - I verify auth (JWT). If the request has no valid token, I reject with `401` instead of silently creating orphan data.
@@ -319,13 +320,15 @@ This is “treat it like production,” even though it’s a personal project.
 - Drum samples are static assets (WAV/MP3/OGG) in a controlled directory.
 - I never let the client request an arbitrary file path like `../../etc/passwd`.
 - When the frontend asks for a sample, it does it by known `sampleId`. On the server side I resolve `sampleId` against an allowlist map:
-		```
+
+    ```
     {
         "kick-808": "samples/808/kick.wav",
         "snare-tight": "samples/808/snare.wav",
         ...
     }
-		```
+    ```
+    
   If the ID isn’t in that map, I `404`.
 
 - Browser caching headers are set so samples can be cached aggressively by the client/CDN. That keeps playback snappy and reduces repeat bandwidth.
@@ -364,10 +367,11 @@ None of these secrets is ever shipped to the browser. All privileged actions (sa
 ### Build / Deploy
 
 - **Local dev**
-		```
+
+    ```
     npm install
     npm run dev
-		```
+    ```
 
   I run the backend server (Express) and the Vite dev server together. Vite proxies `/api` to Express so the frontend can just call `/api/...` without hardcoding ports.
 
